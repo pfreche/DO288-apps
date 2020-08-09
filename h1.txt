@@ -1,0 +1,35 @@
+    1  lab-configure
+    2  pwd
+    3  ls
+    4  ls la
+    5  ls -la
+    6  pwd
+    7  git clone https://github.com/yourgituser/DO288-apps
+    8  git clone https://github.com/pfreche/DO288-apps
+    9  ls
+   10  cd DO288-apps/
+   11  ls la
+   12  ls -la
+   13  head README.md 
+   14  cd ..
+   15  history
+   16  lab docker-build start
+   17  cd DO288-apps/
+   18  git checkout -b docker-build
+   19  git push -u origin docker-build
+   20  . /usr/local/etc/ocp4.config 
+   21  oc login -u ${RHT_OCP4_DEV_USER} 
+   22  oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+   23  oc new-project ${RHT_OCP4_DEV_USER}-docker-build
+   24  oc new-app --name echo https://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps#docker-build --context-dir ubi-echo
+   25  oc logs -f bc/echo
+   26  oc status
+   27  oc get pods
+   28  history
+   29  cd DO288-apps/
+   30  ls
+   31  oc status
+   32  oc get pods
+   33  oc logs echo-1-snf4z
+   34  oc describe bc/echo
+   35  history > h1.txt
