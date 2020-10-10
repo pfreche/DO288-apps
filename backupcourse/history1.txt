@@ -1,0 +1,606 @@
+    1  exit
+    2  exit
+    3  history
+    4  ls
+    5  cd DO288-apps/
+    6  ls
+    7  oc -n openshift describe is php
+    8  lab docker-build start
+    9  oc -n openshift describe is php
+   10  oc get pod
+   11  lab docker-build finish
+   12  source /usr/local/etc/ocp4.config
+   13  oc login -u ${RHT_OCP4_DEV_USER} 
+   14  oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+   15  oc -n openshift describe is ph
+   16  oc -n openshift describe is php
+   17  ls
+   18  pwd
+   19  oc -n openshift describe is php
+   20    cd 
+   21  cd DO288-apps/php-hello
+   22  ls
+   23  cd DO288-apps/php-helloworld/
+   24  ls -la
+   25  cd ..
+   26  lab s2i-scripts start
+   27  sudo podman run --name test -it rhscl/httpd-24-rhel7 bash
+   28  pwd
+   29  ls
+   30  git branch
+   31  git checkout master
+   32  cd s2i-scripts/
+   33  ls
+   34  more index.html 
+   35  ls -la
+   36  cd .s2i/
+   37  ls
+   38  cd bin/
+   39  ls
+   40  more assemble 
+   41  ls
+   42  more run 
+   43  source /usr/local/etc/ocp4.config
+   44  oc get pods
+   45  oc status
+   46  oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+   47  oc new-project ${RHT_OCP4_DEV_USER}-s2i-scripts
+   48   oc new-app --as-deployment-config --name bonjour httpd:2.4~https://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps --context-dir s2i-scripts
+   49  oc logs -f bc/bonjour
+   50  oc get pods
+   51  oc expose svc bonjour
+   52  oc get route
+   53  oc get pods
+   54  oc logs bonjour-1-bh6l2
+   55  pwd
+   56  ls
+   57  more assemble 
+   58  oc start-build
+   59  oc start-build bonjour
+   60  oc get pods
+   61  ls
+   62  more assemble 
+   63  more run 
+   64  oc logs bonjour-1-bh6l2
+   65  oc get po
+   66  oc logs bonjour-2-5q2xg
+   67  clear
+   68  oc logs bonjour-2-5q2xg|more
+   69  sudo podman rm test
+   70  history
+   71  clear
+   72  history
+   73   lab s2i-scripts finish
+   74  s2i
+   75  lab apache-2si start
+   76  lab apache-s2i start
+   77  s2i version
+   78  s2i create s2i-do288-httpd s2i-do288-httpd
+   79  ls
+   80  pwd
+   81  mv s2i-do288-httpd/ ../..
+   82  cd
+   83  ls
+   84  cd
+   85  cd DO288-apps/
+   86  ls
+   87  pwd
+   88  cd s2i-scripts/
+   89  ls
+   90  ls -la
+   91  mv s2i-do288-httpd/ ../..
+   92  cd
+   93  ls
+   94  tree -a s2i-do288-httpd/
+   95  tree  s2i-do288-httpd/
+   96  tree -a s2i-do288-httpd/
+   97  pwd
+   98  cd
+   99  ls
+  100  cat DO288/labs/apache-s2i/Dockerfile 
+  101  clar
+  102  clear
+  103  clar
+  104  cat DO288/labs/apache-s2i/Dockerfile 
+  105  tree -a s2i-do288-httpd/
+  106  more s2i-do288-httpd/s2i/bin/assemble 
+  107  tree -a s2i-do288-httpd/
+  108  more s2i-do288-httpd/Dockerfile 
+  109   cp DO288/labs/apache-s2i/Dockerfile s2i-do288-httpd/
+  110  more s2i-do288-httpd/Dockerfile 
+  111  more s2i-do288-httpd/s2i/bin/assemble 
+  112  more DO288/labs/apache-s2i/s2i/bin/assemble 
+  113  more s2i-do288-httpd/s2i/bin/assemble 
+  114  more DO288/labs/apache-s2i/s2i/bin/assemble 
+  115  cp -Rv DO288/labs/apache-s2i/s2i s2i-do288-httpd/
+  116  rm s2i-do288-httpd/s2i/bin/save-artifacts 
+  117  cd s2i-do288-httpd/
+  118  sudo podman build -t s2i-do288-httpd .
+  119  sudo podman images
+  120  cd ..
+  121  more DO288/labs/apache-s2i/index.html 
+  122  cp DO288/labs/apache-s2i/index.html s2i-do288-httpd/test/test-app
+  123  cp DO288/labs/apache-s2i/index.html s2i-do288-httpd/test/test-app/
+  124  cd s2i-do288-httpd/
+  125  ls
+  126  cd test/
+  127  ls
+  128  ls -la
+  129  more  run 
+  130  cd test-app/
+  131  ls
+  132  ls -la
+  133  cd
+  134  mkdir s2i-sample-app
+  135  cd s2i-do288-httpd/
+  136  ls
+  137  s2i build test/test-app/ s2i-do288-httpd s2i-sample-app --as-dockerfile ~/s2i-sample-app/Dockerfile
+  138  cd 
+  139  cd s2i-sample-app/
+  140  ls
+  141  ls -la
+  142  cd downloads/
+  143  ls
+  144  ls -la
+  145  cd ..
+  146  more Dockerfile 
+  147  sudo podman build --format docker .
+  148  sudo podman images
+  149  sudo podman build --format docker -t s2i-sample-app .
+  150  sudo podman images
+  151  sudo podman run --name test -u 1234 -p 8080:8080 -d s2i-sample-app
+  152  curl http://localhost:8080
+  153  sudo podman stop test
+  154  source /usr/local/etc/ocp4.config
+  155  sudo podman login -u ${RHT_OCP4_QUAY_USER} quay.io
+  156  sudo skopeo copy containers-storage:localhost/s2i-do288-httpd docker://quay.io/${RHT_OCP4_QUAY_USER}/s2i-do288-httpd
+  157  oc login -u ${RHT_OCP4_DEV_USER}   -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  158  oc new-project ${RHT_OCP4_DEV_USER}-apache-s2i
+  159  sudo podman login -u ${RHT_OCP4_QUAY_USER} quay.io
+  160  oc create secret generic quayio  --from-file .dockerconfigjson=${XDG_RUNTIME_DIR}/containers/auth.json  --type=kubernetes.io/dockerconfigjson
+  161  cd
+  162  oc create secret generic quayio  --from-file .dockerconfigjson=${XDG_RUNTIME_DIR}/containers/auth.json  --type=kubernetes.io/dockerconfigjson
+  163  echo ${XDG_RUNTIME_DIR}
+  164  cd DO288/labs/apache-s2i/
+  165  ls
+  166  more create-secret.sh 
+  167  ./create-secret.sh 
+  168  source /usr/local/etc/ocp4.config
+  169  ./create-secret.sh 
+  170  cd
+  171  ls -la
+  172  cd /usr
+  173  oc create secret generic quayio  --from-file .dockerconfigjson=${XDG_RUNTIME_DIR}/containers/auth.json  --type=kubernetes.io/dockerconfigjson
+  174  cd /run/
+  175  cd user/
+  176  ls
+  177  cd 1000/
+  178  ls
+  179  ls -la
+  180  pwd
+  181  sudo podman login -u ${RHT_OCP4_QUAY_USER} quay.io
+  182  ls -la
+  183  pwd
+  184  cd 
+  185  cd .docker
+  186  ls
+  187  ls -la .docke*
+  188  ls .d*
+  189  pwd
+  190  echo ${XDG_RUNTIME_DIR}
+  191  cd /run/user/1000
+  192  ls
+  193  ls -la
+  194  cd
+  195  sudo podman ls
+  196  sudo podman ps
+  197  sudo podman rm test
+  198  sudo podman images
+  199  sudo skopeo delete  docker://quay.io/${RHT_OCP4_QUAY_USER}/s2i-do288-httpd:latest
+  200  lab apache-s2i finish
+  201   lab custom-s2i start
+  202  cd 
+  203  cd DO288/labs/
+  204  cd custom-s2i/
+  205  ls
+  206  cd s2i/bin/
+  207  ls
+  208  more assemble 
+  209  cd ..
+  210  ls
+  211  cd ..
+  212  ls
+  213  more Dockerfile 
+  214  ls
+  215  cd ..
+  216  ls
+  217  cd ..
+  218  ls
+  219  cd ..
+  220  cd DO288-apps/
+  221  ls
+  222  cd s2i-scripts/
+  223  ls
+  224  cd ..
+  225  cd DO288
+  226  ls
+  227  ls -a
+  228  cd labs/
+  229  ls
+  230  cd custom-s2i/
+  231  ls
+  232  ls -la
+  233  cd
+  234  ls
+  235  cd s2i-do288-httpd/
+  236  ls
+  237  more Dockerfile 
+  238  source /usr/local/etc/ocp4.config
+  239  echo ${XDG_RUNTIME_DIR}
+  240  more /usr/local/etc/ocp4.config
+  241  oc get -n templates openshift
+  242  oc get -n openshift templates
+  243  clear
+  244  lab create-template start
+  245  cd 
+  246  cd DO288
+  247  cd labs/
+  248  ls
+  249  ls -la
+  250  cd create-template/
+  251  ls
+  252  ls -la
+  253  more add-route.sh 
+  254  more add-vol.sh 
+  255  more new-app-template.sh 
+  256  source /usr/local/etc/ocp4.config
+  257   oc project ${RHT_OCP4_DEV_USER}-quotes-dev
+  258  oc status
+  259  oc get pvc
+  260   oc get route/quotesapi -o jsonpath='{.spec.host}{"\n"}'
+  261   oc get route/quotesapi 
+  262  edit
+  263  ps
+  264  ps -A
+  265  gedit
+  266  oc get -o yaml --export is > /tmp/is.yaml
+  267  cp /tmp/is.yaml /tmp/is-clean.yaml
+  268  gedit /tmp/is-clean.yaml 
+  269  history
+  270  oc get -o yaml --export bc > /tmp/bc.yaml
+  271  oc get all
+  272  cp /tmp/bc.yaml /tmp/bc-clean.yaml
+  273  gedit /tmp/bc-clean.yaml 
+  274  oc get -o yaml --export dc > /tmp/dc.yaml
+  275  cp /tmp/dc.yaml /tmp/dc-clean.yaml
+  276  gedit /tmp/dc-clean.yaml 
+  277  oc get -o yaml --export svc > /tmp/svc.yaml
+  278  cp /tmp/svc.yaml /tmp/svc-clean.yaml
+  279  gedit /tmp/svc-clean.yaml 
+  280  oc get -o yaml --export route > /tmp/route.yaml
+  281  cp /tmp/route.yaml /tmp/route-clean.yaml
+  282  gedit /tmp/route-clean.yaml 
+  283  oc get -o yaml --export pvc > /tmp/pvc.yaml
+  284  cp /tmp/pvc.yaml /tmp/pvc-clean.yaml
+  285  gedit /tmp/pvc-clean.yaml 
+  286  ls 
+  287  more quotes-template-clean.yaml 
+  288  cat /tmp/is-clean.yaml >> quotes-template-clean.yaml 
+  289  cat /tmp/bc-clean.yaml >> quotes-template-clean.yaml 
+  290  cat /tmp/dc-clean.yaml >> quotes-template-clean.yaml 
+  291  cat /tmp/svc-clean.yaml >> quotes-template-clean.yaml 
+  292  cat /tmp/route-clean.yaml >> quotes-template-clean.yaml 
+  293  cat /tmp/pvc-clean.yaml >> quotes-template-clean.yaml 
+  294  gedit DO288/solutions/create-template/quotes-template-clean.yaml &
+  295  gedit quotes-template-clean.yaml &
+  296  more DO288/solutions/create-template/quotes-template-clean.yaml 
+  297  more DO288/labs/create-template/parameters.yaml 
+  298  cp quotes-template-clean.yaml quotes-template.yaml
+  299  gedit quotes-template.yaml &
+  300  more DO288/labs/create-template/parameters.yaml 
+  301  oc new-app --file=quotes-template.yaml -p APP_GIT_URL=https://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps -p PASSWORD=mypass
+  302  gedit quotes-template.yaml &
+  303  source /usr/local/etc/ocp4.config
+  304  oc new-app --file=quotes-template.yaml -p APP_GIT_URL=https://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps -p PASSWORD=mypass
+  305  oc new-app --file=quotes-template.yaml -p APP_GIT_URL=https://github.com/${RHT_OCP4_GITHUB_USER}/DO288-app -p PASSWORD=mypass
+  306  oc new-app --file=quotes-template.yaml -p APP_GIT_URL=https://github.com/pfreche/DO288-app -p PASSWORD=mypass
+  307  oc new-app --file=quotes-template.yaml -p APP_GIT_URL=https://github.com/pfreche/DO288-app.git -p PASSWORD=mypass
+  308  oc new-app --file=quotes-template.yaml -p APP_GIT_URL=https://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps -p PASSWORD=mypass
+  309  oc project
+  310  oc new-project peter-freche-myquotes
+  311  oc new-app --file=quotes-template.yaml -p APP_GIT_URL=https://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps -p PASSWORD=mypass
+  312  oc get pds
+  313  oc get pods
+  314  more DO288/labs/create-template/populate-db.sh 
+  315  $!
+  316  mysql
+  317  echo $basename
+  318  pod=$(oc get pod -l deploymentconfig=quotesdb -o name)
+  319  echo $pod
+  320  echo ${basename ${pod} }
+  321  echo {basename ${pod} }
+  322  basename
+  323  basename ${pod} 
+  324  echo $pod
+  325  ~/DO288/labs/create-template/populate-db.sh
+  326  oc get route quotesapi
+  327  curl quotesapi-${RHT_OCP4_DEV_USER}-myquotes.${RHT_OCP4_WILDCARD_DOMAIN}/get.php
+  328  source /usr/local/etc/ocp4.config
+  329  curl quotesapi-${RHT_OCP4_DEV_USER}-myquotes.${RHT_OCP4_WILDCARD_DOMAIN}/get.php
+  330  oc rollout
+  331  oc rollout latest
+  332  oc get dc
+  333  oc rollout quotesapi
+  334  oc rollout dc quotesapi
+  335   lab create-template finish
+  336  which lab
+  337  cd /usr/local/bin
+  338  more lab
+  339  pwd
+  340  cd lib
+  341  ls
+  342  cd ..
+  343  cd lib
+  344  ls
+  345  ls -la
+  346  mroe lab-apache-s2i 
+  347  more lab-apache-s2i 
+  348  cd
+  349  lab review-template start
+  350  cp DO288/labs/review-template/todo-template.yaml .
+  351  more todo-template.yaml 
+  352  gedit todo-template.yaml &
+  353  cp DO288/labs/review-template/oc-new-app.sh .
+  354  more oc-new-app.sh 
+  355  gedit todo-template.yaml &
+  356  env
+  357  source /usr/local/etc/ocp4.config
+  358  more /usr/local/etc/ocp4.config 
+  359  gedit oc-new-app.sh 
+  360  oc status
+  361  oc new-project peter-freche-review-template
+  362  ./oc-new-app.sh 
+  363  gedit oc-new-app.sh 
+  364  ./oc-new-app.sh 
+  365  oc logs bc/todoapp -f
+  366  oc logs bc/todo -f
+  367  oc logs bc
+  368  oc get bc
+  369  oc status
+  370  ./oc-new-app.sh 
+  371  ls 
+  372  more oc-new-app.sh 
+  373  ls ~/todo-template.yaml 
+  374  more todo-template.yaml 
+  375  ./oc-new-app.sh 
+  376  more /home/student/todo-template.yaml
+  377  more oc-new-app.sh 
+  378  gedit oc-new-app.sh 
+  379  ./oc-new-app.sh 
+  380  gedit oc-new-app.sh 
+  381  gedit todo-template.yaml 
+  382  more DO288/solutions/review-template/todo-template.yaml 
+  383  gedit todo-template.yaml 
+  384  ./oc-new-app.sh 
+  385  gedit todo-template.yaml &
+  386  ./oc-new-app.sh 
+  387  gedit todo-template.yaml &
+  388  ./oc-new-app.sh 
+  389  oc logs -f bc/todoapp
+  390  oc logs -f dc/todoapp
+  391  oc get pods
+  392  oc get route todoapp
+  393  curl -siw "\n"  http://${RHT_OCP4_DEV_USER}-todo.${RHT_OCP4_WILDCARD_DOMAIN}/items/api/items-count
+  394  curl -siw "\n"  http://${RHT_OCP4_DEV_USER}-todo.${RHT_OCP4_WILDCARD_DOMAIN}/todo/api/items-count
+  395  curl -s "\n"  http://${RHT_OCP4_DEV_USER}-todo.${RHT_OCP4_WILDCARD_DOMAIN}/todo/api/items-count
+  396  curl -s "\n"  httw://${RHT_OCP4_DEV_USER}-todo.${RHT_OCP4_WILDCARD_DOMAIN}/todo/api/items-count
+  397  curl -i "\n"  httw://${RHT_OCP4_DEV_USER}-todo.${RHT_OCP4_WILDCARD_DOMAIN}/todo/api/items-count
+  398  lab review-template grade
+  399  lab review-template finish
+  400  oc set probe --help
+  401  clear
+  402  oc set probe --help
+  403  oc set probe --liveness --help 
+  404  lab probes start
+  405  oc new-project ${RHT_OCP4_DEV_USER}-probes
+  406  oc new-app --as-deployment-config 
+  407  > --name probes --build-env 
+  408  > npm_config_registry=http://${RHT_OCP4_NEXUS_SERVER}/repository/nodejs 
+  409  > nodejs:12~https://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps 
+  410  new-app --as-deployment-config --name probes --build-env npm_config_registry=http://${RHT_OCP4_NEXUS_SERVER}/repository/nodejs nodejs:12~https://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps --context-dir probes
+  411  oc new-app --as-deployment-config --name probes --build-env npm_config_registry=http://${RHT_OCP4_NEXUS_SERVER}/repository/nodejs nodejs:12~https://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps --context-dir probes
+  412  oc logs bc/probes
+  413  oc logs bc/probes -f
+  414   oc get pods
+  415  oc expose svc probes
+  416  oc get routes
+  417  curl -i http://probes-peter-freche-probes.apps.eu45.prod.nextcle.com 
+  418  curl  http://probes-peter-freche-probes.apps.eu45.prod.nextcle.com 
+  419  curl -si http://probes-peter-freche-probes.apps.eu45.prod.nextcle.com 
+  420  curl -si http://probes-peter-freche-probes.apps.eu45.prod.nextcle.com/ready
+  421  curl -i http://probes-peter-freche-probes.apps.eu45.prod.nextcle.com/ready
+  422  oc get pods
+  423  oc delete pod probes-1-vgg4r
+  424  curl -i http://probes-peter-freche-probes.apps.eu45.prod.nextcle.com/ready
+  425  curl -i http://probes-peter-freche-probes.apps.eu45.prod.nextcle.com/read
+  426  curl -i http://probes-peter-freche-probes.apps.eu45.prod.nextcle.com/healthz
+  427  oc set probe dc/probes --liveness --get-url=http://:8080/healthz --inital-delay-seconds=2 --timeout-seconds=2
+  428  oc set probe dc/probes --liveness --get-url=http://:8080/healthz --initial-delay-seconds=2 --timeout-seconds=2
+  429  oc get pods
+  430  oc set probe dc/probes --readiness --get-url=http://:8080/ready --initial-delay-seconds=2 --timeout-seconds=2
+  431  oc get pods
+  432  oc describe dc/probes
+  433  oc describe dc/probes |grep -A2 "porr"
+  434  oc describe dc/probes |grep -A2 "port"
+  435  oc describe dc/probes |grep -A2 "ort"
+  436  oc describe dc/probes |grep -A4 "ort"
+  437  ./DO288/labs/probes/kill.sh 
+  438  oc describe dc/probes
+  439  oc logs -f dc/probes
+  440  oc get pods
+  441  ./DO288/labs/probes/kill.sh 
+  442  oc logs -f dc/probes
+  443  oc get pods
+  444  ./DO288/labs/probes/kill.sh 
+  445  oc logs -f dc/probes
+  446  oc get pods
+  447  oc logs -f dc/probes
+  448  oc get pods
+  449  oc set probe dc/probes --readiness --get-url=http://:8080/ready --initial-delay-seconds=30 --timeout-seconds=2
+  450  oc get pods
+  451  oc get pods login
+  452  oc get pods login login -u
+  453  oc login -u ${RHT_OCP4_DEV_USER}  -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  454  oc get pods
+  455  ./DO288/labs/probes/kill.sh 
+  456  oc logs probes-4-2ztf4
+  457  oc get pods
+  458  ./DO288/labs/probes/kill.sh 
+  459  oc get pods
+  460  oc describe pod/probes-4-2ztf4
+  461  oc describe pod/probes-4-2ztf4|more 
+  462  oc describe pod/probes-4-2ztf4 -o json
+  463  history|more
+  464  o get pods
+  465  oc get pods
+  466  oc get -o yaml probes-2ztf4
+  467  oc get -o yaml pod
+  468  oc get -o yaml pod |m
+  469  oc get -o yaml pod probes-2ztf4
+  470  oc get all
+  471  oc get all -o json
+  472  oc delete projecct peter-freche-probes
+  473  oc delete project peter-freche-probes
+  474  lab probe finish
+  475  lab probes finish
+  476  source /usr/local/etc/ocp4.config
+  477  oc delete project peter-freche-probes login
+  478  oc login -u ${RHT_OCP4_DEV_USER}  -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  479  oc new-project ${RHT_OCP4_DEV_USER}-strategy
+  480  oc new-app -as-deployment-config --name mysql -e MYSQL_USER=test -e MYSQL_PASSWORD=redhat -e MYSQL_DATABASE=testdb --docker-image registry.access.redhat.com/rhscl/mysql-57-rhel7
+  481  oc get pods
+  482  oc new-app --as-deployment-config --name mysql -e MYSQL_USER=test -e MYSQL_PASSWORD=redhat -e MYSQL_DATABASE=testdb --docker-image registry.access.redhat.com/rhscl/mysql-57-rhel7
+  483  oc get pods
+  484  oc get logs dc/mysql
+  485  oc get doc
+  486  oc get dc
+  487  oc get logs dc/mysql
+  488  oc get logs dc 
+  489  oc logs dc 
+  490  oc get dc/mysql
+  491  oc get dc/mysql -o yaml
+  492  oc get dc/mysql -o yaml|grep strategy
+  493  oc get dc/mysql -o yaml|grep -A2 strategy
+  494  oc get dc/mysql -o yaml|grep -A2 strategy.typ
+  495  oc get dc/mysql -o yaml|grep -A2 type
+  496  oc set triggers dc/mysql --from-config --remove
+  497  oc patch dc/mysql --patch '{"spec":{"strategy":{"type":"Recreate"}}}'
+  498  oc patch dc/mysql --type=json -p='[{"op":"remove", "path": "/spec/strategy/rollingParams"}]'
+  499  history
+  500  lab strategy start
+  501  more DO288/labs/strategy/users.sql 
+  502  more DO288/labs/strategy/import.sh 
+  503  more DO288/labs/strategy/post-hook.sh 
+  504  ./DO288/labs/strategy/post-hook.sh 
+  505  oc describe dc/mysql 
+  506  oc describe dc/mysql |grep -A3 'Strategy'
+  507  oc rollout latest dc/mysql
+  508  oc get pods
+  509  oc logs mysql-2-hook-post
+  510  watch -n 2 oc get pods
+  511  oc set env dc/mysql HOOK_RETRIES=4
+  512  oc rollout dc/mysql
+  513  oc rollout latest dc/mysql
+  514  watch -n 2 oc get pods
+  515   oc logs -f mysql-3-hook-post
+  516  oc get pods
+  517  oc rsh mysql-3-zftxq
+  518  oc delete project ${RHT_OCP4_DEV_USER}-strategy
+  519  lab strategy finish
+  520  lab app-deploy start
+  521  cd DO288-apps/
+  522  git checkout master
+  523  git checkout -b app-deploy
+  524  git push -u origin app-deploy
+  525  pwd
+  526  more quip/src/main/java/com/redhat/training/example/Quip.java 
+  527  ls
+  528  more quip/src/main/java/com/redhat/training/example/JaxRsActivator.java 
+  529  more quip/src/main/java/com/redhat/training/example/Quip.java 
+  530  source /usr/local/etc/ocp4.config
+  531  oc status
+  532  oc get pods
+  533  oc projects
+  534  oc new-project peter-freche-app-deploy
+  535  history|more
+  536  history
+  537  oc new-app --as-deployment-config --name quip  --build-env MAVEN_MIRROR_URL=http://${RHT_OCP4_NEXUS_SERVER}/repository/java -i redhat-openjdk18-openshift:1.5 https://github.com/${RHT_OCP4_GITHUB_USER}/DO288-apps#app-deploy --context-dir quip
+  538  oc logs bc/quip
+  539  oc logs bc/quip -f
+  540  oc get pods
+  541  oc logs dc/quip
+  542  oc describe svc/quip
+  543  oc expose svc quip
+  544  oc get route svc quip
+  545  oc get route quip
+  546  oc set probe dc/quip --liveness --get-url=http://:8080/ready --intial-delay-seconds=30 --timeout-seconds=2
+  547  oc set probe dc/quip --liveness --get-url=http://:8080/ready --initial-delay-seconds=30 --timeout-seconds=2
+  548  oc get pods
+  549  history |grep login 
+  550  oc get logs dc 
+  551  oc login -u ${RHT_OCP4_DEV_USER}  -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  552  oc get logs dc 
+  553  oc get logs dc quip
+  554  oc get logs dc/quip
+  555  history
+  556  oc set probe dc/quip --liveness --get-url=http://:8080/ready --initial-delay-seconds=30 --timeout-seconds=2
+  557  oc get pods
+  558  oc set probe dc/quip --readiness --get-url=http://:8080/ready --initial-delay-seconds=30 --timeout-seconds=2
+  559  oc get pods
+  560  oc desribe dc/quip
+  561  oc decsribe dc/quip
+  562  oc describe dc/quip
+  563  oc get pods
+  564  oc describe pod quip-3-txphp
+  565  cat ~/DO288/labs/app-deploy/app-change.sh
+  566  ~/DO288/labs/app-deploy/app-change.sh
+  567  oc start-build quip -F
+  568  oc get pods
+  569  oc rollback dc/quip
+  570  oc get pods
+  571  oc delete project peter-freche-app-deploy
+  572  oc get pods -w
+  573  history |grep lab
+  574  lab app-deploy finish
+  575  lab manage-deploy start
+  576  cd
+  577  cd DO288-apps/
+  578  git checkout master
+  579  git checkout -b manage-deploy
+  580  git push -u origin manage-deploy
+  581  history|grep new-app
+  582  oc new-project peter-freche-manage-deploy
+  583  oc new-app --as-deployment-config --name scale -i  php:7.3 https://github.com/pfreche/DO288-apps#manage-deploy --context-dir php-scale
+  584  oc get pods -w
+  585  watch oc get pods
+  586  oc expose svc/scale
+  587  oc get route scale
+  588  oc describe dc/scale 
+  589  oc describe dc/scale |grep strategy
+  590  oc describe dc/scale |grep Strategy
+  591  oc describe dc/scale |grep rat
+  592  curl http://scale-peter-freche-manage-deploy.apps.eu45.prod.nextcle.com/
+  593  pwd
+  594  ls
+  595  gedit php-scale/index.php 
+  596  git commmit -am "change to version 2" 
+  597  git commit -am "change to version 2" 
+  598  git push
+  599  oc log bc/scale
+  600  oc logs bc/scale
+  601  oc rollback dc/scale
+  602  curl http://scale-peter-freche-manage-deploy.apps.eu45.prod.nextcle.com/
+  603  lab manage-deploy grade
+  604  oc delete project peter-freche-manage-deploy
+  605  cd
+  606  history > history1.txt
